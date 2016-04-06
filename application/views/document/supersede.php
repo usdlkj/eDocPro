@@ -35,7 +35,7 @@
 									</select>
 								</div><?php elseif ($field['field_type'] == 6):?><div class="col-sm-4">
 									<select class="form-control select2" name="<?php echo $field['field_code'];?>[]" id="<?php echo $field['field_code'];?>" multiple<?php if($field['mandatory']):?> required<?php endif;?>>
-										<?php foreach ($selections as $select): if ($select['field_id'] == $field['id']):?><option value="<?php echo $select['id'];?>"<?php if (in_array($select['id'],$field['field_value'])):?> selected<?php endif;?>><?php echo $select['value_text'];?></option>
+										<?php foreach ($selections as $select): if ($select['field_id'] == $field['id']):?><option value="<?php echo $select['id'];?>"<?php if (isset($field['field_value']) && in_array($select['id'],$field['field_value'])):?> selected<?php endif;?>><?php echo $select['value_text'];?></option>
 										<?php endif; endforeach;?>
 									
 									</select>
