@@ -222,6 +222,10 @@ class Document extends CI_Controller {
 						$new_row[] = $value[0]['field_value'];
 					}
 				}
+				else
+				{
+					$new_row[] = '';
+				}
 			}
 			
 			$data[] = $new_row;
@@ -303,6 +307,10 @@ class Document extends CI_Controller {
 							$new_row[] = $value[0]['field_value'];
 						}
 					}
+				}
+				else
+				{
+					$new_row[] = '';
 				}
 			}
 			
