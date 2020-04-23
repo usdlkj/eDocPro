@@ -304,7 +304,8 @@ class User extends CI_Controller {
 			else
 			{
 				// if login and password is confirmed
-				if (password_verify($password, $user['password']))
+				if ($password == $user['password'])
+				//if (password_verify($password, $user['password']))
 				{
 					// save user info into session
 					session_start();

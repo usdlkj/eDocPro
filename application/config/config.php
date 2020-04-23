@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://www.isearch.com.sg/igniter/';
+$config['base_url'] = 'http://kapzet.id/kapzet.id/edocpro/';
 
 /*
 |--------------------------------------------------------------------------
