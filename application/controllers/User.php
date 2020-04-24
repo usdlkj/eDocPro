@@ -304,8 +304,7 @@ class User extends CI_Controller {
 			else
 			{
 				// if login and password is confirmed
-				if ($password == $user['password'])
-				//if (password_verify($password, $user['password']))
+				if (password_verify($password, $user['password']))
 				{
 					// save user info into session
 					session_start();
@@ -325,6 +324,7 @@ class User extends CI_Controller {
 			}
 		}
 		else {
+			log_message('debug','User is trying to login.');
 			$this->load->view('user/login');
 		}
 	}

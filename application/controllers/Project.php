@@ -203,8 +203,8 @@ class Project extends CI_Controller {
 		$this->project_model->hide($project);
 		
 		// set current project id to 0
-		$user['current_project_id'] = 0;
-		$this->user_model->set_current_project($user);
+		// $user['current_project_id'] = 0;
+		// $this->user_model->set_current_project($user);
 		
 		$this->project_model->trans_complete();
 		

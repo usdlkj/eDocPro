@@ -19,8 +19,7 @@ class Company_model extends CI_Model
 			'company_name' 	=> $company['cname'],
 			'trading_name' 	=> $company['tname'],
 			'company_code' 	=> strtolower($company['ccode']),
-			'created_by' 	=> $company['user'],
-			'modified_by' 	=> $company['user']
+			'created_by' 	=> $company['user']
 		);
 		$this->db->insert('cdm_company', $data);
 		
@@ -39,7 +38,7 @@ class Company_model extends CI_Model
 	
 	public function get_active_companies()
 	{
-		$query = $this->db->get_where('cdm_company', array('active' => 1));
+		$query = $this->db->get_where('cdm_company', 'deleted_by IS NULL');
 		return $query->result_array();
 	}
 	
@@ -61,8 +60,8 @@ class Company_model extends CI_Model
 			'company_name' 	=> $company['cname'],
 			'trading_name' 	=> $company['tname'],
 			'company_code' 	=> strtolower($company['ccode']),
-			'active' 		=> 1,
-			'modified_by' 	=> $company['user']
+			'updated_by' 	=> $company['user'],
+			'updated_at'	=> date('Y-m-d H:i:s')
 		);
 		
 		$this->db->where('id', $company['id']);
@@ -78,8 +77,8 @@ class Company_model extends CI_Model
 	public function hide($company)
 	{
 		$data = array(
-			'active' 		=> 0,
-			'modified_by' 	=> $company['user']
+			'deleted_by' 	=> $company['user'],
+			'deleted_at'	=> date('Y-m-d H:i:s')
 		);
 		
 		$this->db->where('id', $company['id']);

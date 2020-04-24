@@ -20,8 +20,7 @@ class User_model extends CI_Model
 			'login' 		=> strtolower($user['login']),
 			'password' 		=> $user['password'],
 			'first_name' 	=> $user['fname'],
-			'created_by' 	=> $user['user'],
-			'modified_by' 	=> $user['user']
+			'created_by' 	=> $user['user']
 		);
 		$this->db->insert('cdm_user', $data);
 		
@@ -40,7 +39,7 @@ class User_model extends CI_Model
 	
 	public function get_active_users()
 	{
-		$query = $this->db->get_where('cdmv_user', array('active' => 1));
+		$query = $this->db->get_where('cdmv_user', 'deleted_by IS NULL');
 		return $query->result_array();
 	}
 	
@@ -62,9 +61,8 @@ class User_model extends CI_Model
 			'company_id' 	=> $user['company_id'],
 			'login' 		=> strtolower($user['login']),
 			'first_name' 	=> $user['first_name'],
-			'active' 		=> 1,
-			'modified'		=> date('Y-m-d H:i:s'),
-			'modified_by' 	=> $user['user']
+			'updated_by' 	=> $user['user'],
+			'updated_at'	=> date('Y-m-d H:i:s')
 		);
 		
 		$this->db->where('id', $user['id']);
@@ -90,9 +88,8 @@ class User_model extends CI_Model
 	public function hide($user)
 	{
 		$data = array(
-			'active' 		=> 0,
-			'modified' 		=> date('Y-m-d H:i:s'),
-			'modified_by' 	=> $user['user']
+			'deleted_by' 	=> $user['user'],
+			'deleted_at'	=> date('Y-m-d H:i:s')
 		);
 		
 		$this->db->where('id', $user['id']);

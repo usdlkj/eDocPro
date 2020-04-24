@@ -20,8 +20,7 @@ class Project_model extends CI_Model
 			'project_code' 	=> strtolower($project['pcode']),
 			'description' 	=> $project['desc'],
 			'owner_com_id' 	=> $project['company_id'],
-			'created_by' 	=> $project['user'],
-			'modified_by' 	=> $project['user']
+			'created_by' 	=> $project['user']
 		);
 		$this->db->insert('cdm_project', $data);
 
@@ -63,9 +62,8 @@ class Project_model extends CI_Model
 			'project_code' 	=> strtolower($project['pcode']),
 			'owner_com_id' 	=> $project['owner_com_id'],
 			'description' 	=> $project['desc'],
-			'active' 		=> 1,
-			'modified' 		=> date('Y-m-d H:i:s'),
-			'modified_by' 	=> $project['user']
+			'updated_by'	=> $project['user'],
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		);
 		
 		$this->db->where('id', $project['id']);

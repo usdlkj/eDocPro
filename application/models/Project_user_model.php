@@ -19,7 +19,7 @@ class Project_user_model extends CI_Model
 	
 	public function get_active_projects_by_user_id($user_id)
 	{
-		$query = $this->db->get_where('cdmv_project_user', array('user_id' => $user_id, 'active' => 1));
+		$query = $this->db->get_where('cdmv_project_user', 'user_id = '.$user_id.' AND deleted_by IS NULL');
 		return $query->result_array();
 	}
 	

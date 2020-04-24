@@ -1,15 +1,15 @@
-			
-				</div>
+				</main>
 			</div>
-			<p class="text-center">
+			<footer class="c-footer">
+			<!-- Footer content here -->
 				&copy; 2015 <a href="mailto:warnin@gmail.com">Ivan Tanu</a>. All rights reserved.<br/>
 				Handcrafted with love and a lot of Nuka-cola.
-			</p>
+			</footer>
 		</div>
 
 		<!-- Optional JavaScript -->
-		<script src="<?php echo base_url();?>public/js/docs.min.js"></script>
-		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="<?php echo base_url();?>public/js/ie10-viewport-bug-workaround.js"></script>
+		<!-- Popper.js first, then CoreUI JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9&#43;4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/js/coreui.min.js"></script>
 	</body>
 </html>

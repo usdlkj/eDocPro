@@ -1,4 +1,4 @@
-					<script>
+<script>
 					$( document ).ready( function () {
 						var table = $('#data_table').DataTable( {
 							"ajax": "<?php echo site_url(array('document','ajax_latest_docs',$id_hash2));?>",
@@ -42,18 +42,25 @@
 						} );
 					} );
 					</script>
-					<div class="table-responsive">
-						<?php if (isset($message)) echo $message;?>
-						
-						<?php if ($project_id != '0'):?><table id="data_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th></th>
-								<?php foreach ($fields as $field):?><th><?php echo $field['field_text'];?></th>
-								<?php endforeach;?>
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title"><?php echo $title;?></h5>
+						</div>
+						<div class="card-body mt-3">
+							<div class="table-responsive">
+								<?php if (isset($message)) echo $message;?>
+								
+								<?php if ($project_id != '0'):?><table id="data_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th></th>
+										<?php foreach ($fields as $field):?><th><?php echo $field['field_text'];?></th>
+										<?php endforeach;?>
+									
+									</tr>
+								</thead>
+								</table><?php endif;?>
 							
-							</tr>
-						</thead>
-						</table><?php endif;?>
-					
+							</div>
+						</div>
 					</div>
