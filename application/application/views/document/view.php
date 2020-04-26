@@ -7,7 +7,6 @@
 								{ 
 									"targets": 0, 
 									"orderable": false,
-									"width": 55,
 									"className": "text-center"
 								}
 							],
@@ -42,18 +41,22 @@
 						} );
 					} );
 					</script>
-					<div class="table-responsive">
-						<?php if (isset($message)) echo $message;?>
-						
-						<?php if ($project_id != '0'):?><table id="data_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th></th>
-								<?php foreach ($fields as $field):?><th><?php echo $field['field_text'];?></th>
-								<?php endforeach;?>
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title"><?php echo $title;?></h5>
+						</div>
+						<div class="card-body table-responsive">
+							<?php if (isset($message)) echo $message;?>
 							
-							</tr>
-						</thead>
-						</table><?php endif;?>
-					
-					</div>
+							<?php if ($project_id != '0'):?><table id="data_table" class="display">
+							<thead>
+								<tr>
+									<th></th>
+									<?php foreach ($fields as $field):?><th><?php echo $field['field_text'];?></th>
+									<?php endforeach;?>
+								
+								</tr>
+							</thead>
+							</table><?php endif;?>
+						
+						</div>

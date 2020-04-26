@@ -77,6 +77,23 @@ class Mail extends CI_Controller {
 		$this->set_mail_data($data, $id_hash, $mails);
 	}
 	
+	public function draft($id_hash, $message = NULL)
+	{
+		log_message('info', 'Viewing draft mails.');
+		
+		// check if login is valid
+		$this->cdmhelper->check_login();
+		
+		// set data variable for views
+		$user = $this->user_model->get_user_by_id($_SESSION['user_id']);
+		$data = $this->set_data($user, $message);
+		
+		// set mail data
+		$data['title'] 		= 'Draft Mails';
+		$mails = $this->mail_model->get_sent_mails($user['company_id']);
+		$this->set_mail_data($data, $id_hash, $mails);
+	}
+	
 	public function create($id_hash)
 	{
 		log_message('info', 'Sending mail.');
@@ -175,8 +192,8 @@ class Mail extends CI_Controller {
 				array_push($recipients, $temp['first_name']);
 			}
 			$mails[$i]['recipients'] = implode(', ', $recipients);
-			$modified = new DateTime($mails[$i]['modified']);
-			$mails[$i]['modified2'] = $modified->format('d/m/Y H:i:s');
+			$created_at = new DateTime($mails[$i]['created_at']);
+			$mails[$i]['created_at'] = $created_at->format('d/m/Y H:i:s');
 		}
 		
 		$data['mails']			= $mails;
@@ -207,6 +224,7 @@ class Mail extends CI_Controller {
 	// function: set recipients
 	function set_recipients($input, $user_type, $mail_id)
 	{
+		log_message('debug','controller.mail.set_recipients.$input: '.$input);
 		$recipients = $this->input->post($input);
 		
 		if (count($recipients) == 0) return;
@@ -260,8 +278,8 @@ class Mail extends CI_Controller {
 				array_push($recipients, $temp['first_name']);
 			}
 			$mails[$i]['recipients'] = implode(', ', $recipients);
-			$modified = new DateTime($mails[$i]['modified']);
-			$mails[$i]['modified2'] = $modified->format('d/m/Y H:i:s');
+			$created_at = new DateTime($mails[$i]['created_at']);
+			$mails[$i]['created_at'] = $created_at->format('d/m/Y H:i:s');
 		}
 		$data['mails']		= $mails;
 		

@@ -30,6 +30,10 @@
 	<!-- Select2 -->
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+	
+	<!-- Datepicker -->
+	<link rel="stylesheet" href="<?php echo base_url();?>public/css/datepicker.css"/>
+	<script type="text/javascript" src="<?php echo base_url();?>public/js/bootstrap-datepicker.js"></script>
 
     <style>
     .required {
@@ -109,6 +113,9 @@
                 </li>
                 <?php endif;?>
             </ul>
+			<div class="col-2 mt-2">
+				<a href="<?php echo site_url(array('user','logout'));?>">Logout</a>
+			</div>
         </header>
         <div class="c-body">
             <main class="c-main">

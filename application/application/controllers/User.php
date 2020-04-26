@@ -311,7 +311,11 @@ class User extends CI_Controller {
 					$_SESSION['user_id'] = $user['id'];
 					
 					// load the document view page
-					$project_id = $this->hashids->encode($user['current_project_id']);
+					$project_id = $user['current_project_id'];
+					if ($project_id == null) {
+						$project_id = 0;
+					}
+					$project_id = $this->hashids->encode($project_id);
 					redirect('/document/view/'.$project_id, 'refresh');
 				}
 				else 

@@ -98,11 +98,13 @@ class User_model extends CI_Model
 	
 	public function set_current_project($user)
 	{
-		$data = array(
-			'current_project_id' => $user['current_project_id']
-		);
-		
-		$this->db->where('id', $user['id']);
-		return $this->db->update('cdm_user', $data);
+		if ($user['current_project_id'] != 0) {
+			$data = array(
+				'current_project_id' => $user['current_project_id']
+			);
+			
+			$this->db->where('id', $user['id']);
+			return $this->db->update('cdm_user', $data);
+		}
 	}
 }

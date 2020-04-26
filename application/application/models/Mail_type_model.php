@@ -12,6 +12,7 @@ class Mail_type_model extends CI_Model
 			'project_id'		=> $type['project_id'],
 			'mail_type'			=> $type['mail_type'],
 			'mail_code'			=> strtolower($type['mail_code']),
+			'last_number'		=> '000000',
 			'is_transmittal'	=> $type['is_transmittal'],
 			'created_by' 		=> $type['user']
 		);
