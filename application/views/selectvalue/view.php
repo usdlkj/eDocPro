@@ -6,7 +6,6 @@
 								{ 
 									"targets": 0, 
 									"orderable": false,
-									"width": 40
 								}
 							],
 							dom: 
@@ -30,26 +29,35 @@
 						} );
 					});
 					</script>
-					<div class="table-responsive">
-						<?php if (isset($message)) echo $message;?>
-						
-						<table id="data_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Selection Code</th>
-								<th>Selection Text</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach ($values as $value):?><tr>
-								<td class="text-center">
-									<a href="<?php echo site_url(array('selectvalue','delete', $this->hashids->encode($value['id'])));?>" data-toggle="tooltip" title="Delete Selection"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></a>
-								</td>
-								<td><?php echo $value['value_code'];?></td>
-								<td><?php echo $value['value_text'];?></td>
-							</tr><?php endforeach;?>
-						
-						</tbody>
-						</table>
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title"><?php echo $title;?></h5>
+						</div>
+						<div class="card-body table-responsive">
+							<?php if (isset($message)) echo $message;?>
+							
+							<table id="data_table" class="display">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Selection Code</th>
+									<th>Selection Text</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($values as $value):?><tr>
+									<td class="text-center">
+										<a href="<?php echo site_url(array('selectvalue','delete', $this->hashids->encode($value['id'])));?>" data-toggle="tooltip" title="Delete Selection">
+											<button type="button" class="btn btn-danger btn-xs">
+												<span class="cil-trash btn-icon"></span>
+											</button>
+										</a>
+									</td>
+									<td><?php echo $value['value_code'];?></td>
+									<td><?php echo $value['value_text'];?></td>
+								</tr><?php endforeach;?>
+							
+							</tbody>
+							</table>
+						</div>
 					</div>

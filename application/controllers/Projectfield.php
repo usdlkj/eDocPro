@@ -151,12 +151,19 @@ class Projectfield extends CI_Controller {
 		{
 			$field = $this->project_field_model->get_by_id($field['id']);
 			$field['field_text'] 	= $this->input->post('field_text');
+			log_message('debug','controller.projectfield.edit.$field[\'field_text\']: '.$field['field_text']);
 			$field['visible'] 		= $this->input->post('visible') == NULL ? 0 : 1;
 			$field['mandatory'] 	= $this->input->post('mandatory') == NULL ? 0 : 1;
+			
+			// store old sequence
+			$sequence				= $field['sequence'];
 			$field['sequence']		= $this->input->post('sequence');
 			
 			$this->project_model->trans_start();
-			$fields2 = $this->project_field_model->update_sequence($field);
+			$this->project_field_model->update($field);
+			if ($sequence != $field['sequence']) {
+				$fields2 = $this->project_field_model->update_sequence($field);
+			}
 			$this->project_model->trans_complete();
 			
 			$success = 'Field changed.';

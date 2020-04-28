@@ -12,9 +12,9 @@ class Mail_type_model extends CI_Model
 			'project_id'		=> $type['project_id'],
 			'mail_type'			=> $type['mail_type'],
 			'mail_code'			=> strtolower($type['mail_code']),
+			'last_number'		=> '000000',
 			'is_transmittal'	=> $type['is_transmittal'],
-			'created_by' 		=> $type['user'],
-			'modified_by' 		=> $type['user']
+			'created_by' 		=> $type['user']
 		);
 		
 		$this->db->insert('cdm_mail_type', $data);
@@ -34,7 +34,7 @@ class Mail_type_model extends CI_Model
 	
 	public function get_mail_types($project_id)
 	{
-		$query = $this->db->get_where('cdm_mail_type', array('project_id' => $project_id, 'active' => 1));
+		$query = $this->db->get_where('cdm_mail_type', 'project_id = '.$project_id.' AND deleted_by IS NULL');
 		return $query->result_array();
 	}
 	
@@ -44,9 +44,8 @@ class Mail_type_model extends CI_Model
 			'mail_type'			=> $type['mail_type'],
 			'mail_code'			=> strtolower($type['mail_code']),
 			'is_transmittal'	=> $type['is_transmittal'],
-			'active'			=> 1,
-			'modified'			=> date('Y-m-d H:i:s'),
-			'modified_by' 		=> $type['user']
+			'updated_at'		=> date('Y-m-d H:i:s'),
+			'updated_by' 		=> $type['user']
 		);
 		
 		$this->db->where('id', $type['id']);
@@ -70,9 +69,8 @@ class Mail_type_model extends CI_Model
 	public function hide($type)
 	{
 		$data = array(
-			'active' 		=> 0,
-			'modified' 		=> date('Y-m-d H:i:s'),
-			'modified_by' 	=> $type['user']
+			'deleted_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_by' 	=> $type['user']
 		);
 		
 		$this->db->where('id', $type['id']);

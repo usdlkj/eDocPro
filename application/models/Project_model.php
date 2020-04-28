@@ -39,7 +39,7 @@ class Project_model extends CI_Model
 	
 	public function get_active_projects()
 	{
-		$query = $this->db->get_where('cdmv_project', array('active' => 1));
+		$query = $this->db->get_where('cdmv_project', 'deleted_by IS NULL');
 		return $query->result_array();
 	}
 	
@@ -79,9 +79,8 @@ class Project_model extends CI_Model
 	public function hide($project)
 	{
 		$data = array(
-			'active' 		=> 0,
-			'modified' 		=> date('Y-m-d H:i:s'),
-			'modified_by' 	=> $project['user']
+			'deleted_at' 		=> date('Y-m-d H:i:s'),
+			'deleted_by' 	=> $project['user']
 		);
 		
 		$this->db->where('id', $project['id']);

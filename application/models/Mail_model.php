@@ -29,8 +29,7 @@ class Mail_model extends CI_Model
 			'mail_status'		=> 1,
 			'subject'			=> $mail['subject'],
 			'message'			=> $mail['message'],
-			'created_by' 		=> $mail['user'],
-			'modified_by' 		=> $mail['user']
+			'created_by' 		=> $mail['user']
 		);
 		$this->db->insert('cdm_mail', $data);
 		
@@ -95,7 +94,8 @@ class Mail_model extends CI_Model
 			'mail_status'		=> 1,
 			'subject'			=> $mail['subject'],
 			'message'			=> $mail['message'],
-			'modified_by' 		=> $mail['user']
+			'updated_by' 		=> $mail['user'],
+			'updated_at' 		=> date('Y-m-d H:i:s')
 		);
 		
 		$this->db->where('id', $mail['id']);

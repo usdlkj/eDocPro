@@ -57,9 +57,14 @@ class Project_field_model extends CI_Model
 	
 	public function update($field)
 	{
-		$field['field_code'] = strtolower($field['field_code']);
+		$data = array(
+			'field_text' 	=> $field['field_text'],
+			'visible' 		=> $field['visible'],
+			'mandatory'		=> $field['mandatory']
+		);
+		
 		$this->db->where('id', $field['id']);
-		$this->db->update('cdm_project_field', $field);
+		$this->db->update('cdm_project_field', $data);
 	}
 	
 	public function update_sequence($field)

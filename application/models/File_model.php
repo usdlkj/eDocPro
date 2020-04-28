@@ -26,8 +26,7 @@ class File_model extends CI_Model
 			'file_loc' 		=> $file['file_loc'],
 			'file_size' 	=> $file['file_size'],
 			'file_ext' 		=> $file['file_ext'],
-			'created_by' 	=> $file['user'],
-			'modified_by' 	=> $file['user']
+			'created_by' 	=> $file['user']
 		);
 		$this->db->insert('cdm_file', $data);
 		
@@ -58,16 +57,15 @@ class File_model extends CI_Model
 	
 	public function get_active_files()
 	{
-		$query = $this->db->get_where('cdm_file', array('active' => 1));
+		$query = $this->db->get_where('cdm_file', 'deleted_by IS NULL');
 		return $query->result_array();
 	}
 	
 	public function hide($file)
 	{
 		$data = array(
-			'active' 		=> 0,
-			'modified' 		=> date('Y-m-d H:i:s'),
-			'modified_by' 	=> $file['user']
+			'deleted_at'	=> date('Y-m-d H:i:s'),
+			'deleted_by' 	=> $file['user']
 		);
 		
 		$this->db->where('id', $file['id']);

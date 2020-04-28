@@ -60,7 +60,7 @@ class User extends CI_Controller {
 				'rules' => 'required'
 			),   
 			array(
-				'field' => 'fname', 
+				'field' => 'first_name', 
 				'label' => 'First Name', 
 				'rules' => 'required'
 			),
@@ -88,7 +88,8 @@ class User extends CI_Controller {
 			$new_user = array(
 				'login' 		=> $this->input->post('login'),
 				'password' 		=> password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-				'fname' 		=> $this->input->post('fname'),
+				'first_name' 	=> $this->input->post('first_name'),
+				'last_name'		=> $this->input->post('last_name'),
 				'company_id' 	=> $this->input->post('company'),
 				'user' 			=> $user['login']
 			);
@@ -122,7 +123,7 @@ class User extends CI_Controller {
 				'rules' => 'required|min_length[4]|max_length[8]|alpha_numeric'
 			), 
 			array(
-				'field' => 'fname', 
+				'field' => 'first_name', 
 				'label' => 'First Name', 
 				'rules' => 'required'
 			),
@@ -161,7 +162,8 @@ class User extends CI_Controller {
 					'company_id' 	=> $this->input->post('company'),
 					'login' 		=> $this->input->post('login'),
 					'password'		=> $user['password'],
-					'first_name' 	=> $this->input->post('fname'),
+					'first_name' 	=> $this->input->post('first_name'),
+					'last_name'		=> $this->input->post('last_name'),
 					'user' 			=> $user['login']
 				);
 				$this->user_model->update($user);
@@ -311,7 +313,11 @@ class User extends CI_Controller {
 					$_SESSION['user_id'] = $user['id'];
 					
 					// load the document view page
-					$project_id = $this->hashids->encode($user['current_project_id']);
+					$project_id = $user['current_project_id'];
+					if ($project_id == null) {
+						$project_id = 0;
+					}
+					$project_id = $this->hashids->encode($project_id);
 					redirect('/document/view/'.$project_id, 'refresh');
 				}
 				else 
@@ -324,7 +330,6 @@ class User extends CI_Controller {
 			}
 		}
 		else {
-			log_message('debug','User is trying to login.');
 			$this->load->view('user/login');
 		}
 	}

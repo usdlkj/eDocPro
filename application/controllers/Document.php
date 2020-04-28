@@ -29,7 +29,7 @@ class Document extends CI_Controller {
 		$temp = $this->hashids->decode($id_hash);
 		$project_id = $temp[0];
 		$project = $this->project_model->get_project_by_id($project_id);
-		if (!$project['active']) {
+		if ($project['deleted_by']) {
 			$project_id = 0;
 		}
 		
@@ -189,16 +189,18 @@ class Document extends CI_Controller {
 			$fields = $this->project_field_model->get_visible_fields_by_project_id($project_id);
 			$new_row = array();
 			
-			if ($document['file_id'] == '0') {
-				$new_row[] = '<button type="button" class="btn btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></button>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></button></a>';
+			if ($document['file_id'] == null) {
+				$new_row[] = '<button type="button" class="btn btn-xs"><span class="cil-chevron-circle-down-alt btn-icon"></span></button>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="cil-file btn-icon"></span></button></a>';
 			}
 			else {
-				$new_row[] = '<a href="'.site_url(array('file','download',$this->hashids->encode($document['file_id']))).'" data-toggle="tooltip" title="Download File"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></button></a>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></button></a>';
+				$new_row[] = '<a href="'.site_url(array('file','download',$this->hashids->encode($document['file_id']))).'" data-toggle="tooltip" title="Download File"><button type="button" class="btn btn-success btn-xs"><span class="cil-chevron-circle-down-alt btn-icon"></span></button></a>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="cil-file btn-icon"></span></button></a>';
 			}
 			
 			foreach ($fields as $field) 
 			{
 				$value = $this->document_field_model->get_field_value($document['id'], $field['field_code']);
+				
+				// check if $value has result, i.e. its size is greater than 0
 				if (count($value) > 0)
 				{
 					if ($field['field_type'] == 5)
@@ -221,10 +223,6 @@ class Document extends CI_Controller {
 					{
 						$new_row[] = $value[0]['field_value'];
 					}
-				}
-				else
-				{
-					$new_row[] = '';
 				}
 			}
 			
@@ -259,11 +257,11 @@ class Document extends CI_Controller {
 			$fields = $this->project_field_model->get_visible_fields_by_project_id($project_id);
 			$new_row = array();
 			
-			if ($document['file_id'] == '0') {
-				$new_row[] = '<button type="button" class="btn btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></button>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></button></a>';
+			if ($document['file_id'] == null) {
+				$new_row[] = '<button type="button" class="btn btn-xs"><span class="cil-download btn-icon"></span></button>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="cil-file btn-icon"></span></button></a>';
 			}
 			else {
-				$new_row[] = '<a href="'.site_url(array('file','download',$this->hashids->encode($document['file_id']))).'" data-toggle="tooltip" title="Download File"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></button></a>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></button></a>';
+				$new_row[] = '<a href="'.site_url(array('file','download',$this->hashids->encode($document['file_id']))).'" data-toggle="tooltip" title="File"><button type="button" class="btn btn-success btn-xs"><span class="cil-chevron-circle-down-alt btn-icon"></span></button></a>&nbsp;<a href="'.site_url(array('document','detail',$this->hashids->encode($document['id']))).'" data-toggle="tooltip" title="Document Detail"><button type="button" class="btn btn-primary btn-xs"><span class="cil-file btn-icon"></span></button></a>';
 			}
 			
 			foreach ($fields as $field) 
@@ -307,10 +305,6 @@ class Document extends CI_Controller {
 							$new_row[] = $value[0]['field_value'];
 						}
 					}
-				}
-				else
-				{
-					$new_row[] = '';
 				}
 			}
 			
@@ -425,13 +419,15 @@ class Document extends CI_Controller {
 		$this->project_model->trans_start();
 			
 		// upload file
-		$file_id = 0;
+		$file_id = null;
+		log_message('debug','controller.document.create_document.$file_id: '.$file_id);
 		if ($this->upload->do_upload('userfile'))
 		{
 			$file_data = $this->upload->data();
 			
 			// get file hash
 			$temp_file = $file_data['full_path'];
+			log_message('debug','controller.document.create_document.$temp_file: '.$temp_file);
 			$file_hash = md5_file($temp_file);
 			$target_file = './public/filestore/'.$file_hash.".".$file_data['file_ext'];
 			if (file_exists($target_file)) {
@@ -470,11 +466,13 @@ class Document extends CI_Controller {
 			$doc_field['field_code']	= $field['field_code'];
 			if ($field['field_type'] == 6)
 			{
-				if ($this->input->post($field['field_code'])) 
-				{
+				if ($this->input->post($field['field_code']))  {
 					$doc_field['field_value'] = implode(',',$this->input->post($field['field_code']));
-					$this->document_field_model->create($doc_field);
 				}
+				else {	
+					$doc_field['field_value'] = '';
+				}
+				$this->document_field_model->create($doc_field);
 			}
 			else 
 			{

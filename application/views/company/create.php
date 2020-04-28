@@ -1,5 +1,4 @@
-<?php if (isset($message)): echo $message; endif; echo validation_errors();?>
-					
+					<?php if (isset($message)): echo $message; endif; echo validation_errors();?>
 					<div class="card w-50">
 						<div class="card-header">
 							<h5 class="card-title"><?php echo $title;?></h5>
