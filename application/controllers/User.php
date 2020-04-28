@@ -60,7 +60,7 @@ class User extends CI_Controller {
 				'rules' => 'required'
 			),   
 			array(
-				'field' => 'first_name', 
+				'field' => 'fname', 
 				'label' => 'First Name', 
 				'rules' => 'required'
 			),
@@ -88,8 +88,7 @@ class User extends CI_Controller {
 			$new_user = array(
 				'login' 		=> $this->input->post('login'),
 				'password' 		=> password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-				'first_name' 	=> $this->input->post('first_name'),
-				'last_name'		=> $this->input->post('last_name'),
+				'fname' 		=> $this->input->post('fname'),
 				'company_id' 	=> $this->input->post('company'),
 				'user' 			=> $user['login']
 			);
@@ -123,7 +122,7 @@ class User extends CI_Controller {
 				'rules' => 'required|min_length[4]|max_length[8]|alpha_numeric'
 			), 
 			array(
-				'field' => 'first_name', 
+				'field' => 'fname', 
 				'label' => 'First Name', 
 				'rules' => 'required'
 			),
@@ -162,8 +161,7 @@ class User extends CI_Controller {
 					'company_id' 	=> $this->input->post('company'),
 					'login' 		=> $this->input->post('login'),
 					'password'		=> $user['password'],
-					'first_name' 	=> $this->input->post('first_name'),
-					'last_name'		=> $this->input->post('last_name'),
+					'first_name' 	=> $this->input->post('fname'),
 					'user' 			=> $user['login']
 				);
 				$this->user_model->update($user);

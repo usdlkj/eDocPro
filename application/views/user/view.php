@@ -8,7 +8,7 @@
 									"orderable": false
 								},
 								{
-									"targets": 5,
+									"targets": 4,
 									"orderable": false
 								}
 							],
@@ -40,7 +40,6 @@
 									<th></th>
 									<th>Username</th>
 									<th>First Name</th>
-									<th>Last Name</th>
 									<th>Company</th>
 									<th class="text-center">Active</th>
 								</tr>
@@ -80,7 +79,6 @@
 									</td>
 									<td><?php echo $user['login'];?></td>
 									<td><?php echo $user['first_name'];?></td>
-									<td><?php echo $user['last_name'];?></td>
 									<td><?php echo $user['trading_name'];?></td>
 									<td class="text-center">
 										<input type="checkbox"<?php if (!$user['deleted_by']):?> checked<?php endif;?> disabled />

@@ -48,7 +48,7 @@ class Document extends CI_Controller {
 		$data['title'] 		= 'Viewing Documents';
 		$data['id_hash'] 	= $this->hashids->encode($project_id);
 		$data['id_hash2']	= $this->hashids->encode($project_id, $user['company_id']);
-		$data['fields'] 	= $this->project_field_model->get_by_project_id($project_id);
+		$data['fields'] 	= $this->project_field_model->get_visible_fields_by_project_id($project_id);
 		$data['selections']	= $this->select_value_model->get_by_project_id($project_id);
 		
 		// load views
@@ -199,10 +199,9 @@ class Document extends CI_Controller {
 			foreach ($fields as $field) 
 			{
 				$value = $this->document_field_model->get_field_value($document['id'], $field['field_code']);
-				
-				// check if $value has result, i.e. its size is greater than 0
 				if (count($value) > 0)
 				{
+					log_message('debug','controller.document.ajax_latest_docs.$value[0][\'field_value\']'.$value[0]['field_value']);
 					if ($field['field_type'] == 5)
 					{
 						$select = $this->select_value_model->get_by_value_id($value[0]['field_value']);
@@ -420,7 +419,6 @@ class Document extends CI_Controller {
 			
 		// upload file
 		$file_id = null;
-		log_message('debug','controller.document.create_document.$file_id: '.$file_id);
 		if ($this->upload->do_upload('userfile'))
 		{
 			$file_data = $this->upload->data();
@@ -466,13 +464,11 @@ class Document extends CI_Controller {
 			$doc_field['field_code']	= $field['field_code'];
 			if ($field['field_type'] == 6)
 			{
-				if ($this->input->post($field['field_code']))  {
+				if ($this->input->post($field['field_code'])) 
+				{
 					$doc_field['field_value'] = implode(',',$this->input->post($field['field_code']));
+					$this->document_field_model->create($doc_field);
 				}
-				else {	
-					$doc_field['field_value'] = '';
-				}
-				$this->document_field_model->create($doc_field);
 			}
 			else 
 			{

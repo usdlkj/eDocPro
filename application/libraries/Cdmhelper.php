@@ -6,7 +6,7 @@ class Cdmhelper {
     {
 		log_message('info', 'Checking session.');
 		
-		// start session if not yet started
+		// // start session if not yet started
 		if (session_status() == PHP_SESSION_NONE) 
 		{
 			log_message('info', 'Session not started. Starting session.');
@@ -14,11 +14,10 @@ class Cdmhelper {
 		}
 		
 		// if user's login does not exist, e.g. user is not logged in, return to login screen.
-		if ($_SESSION['user_id'] === NULL) 
+		if (!isset($_SESSION['user_id'])) 
 		{
 			log_message('info', 'User is not logged in.');
-			$CI =& get_instance();
-			$CI->login();
+			redirect('/user/login');
 		}
     }
 	

@@ -54,6 +54,7 @@
 									<th></th>
 									<?php foreach ($fields as $field):?><th><?php echo $field['field_text'];?></th>
 									<?php endforeach;?>
+								
 								</tr>
 							</thead>
 							</table><?php endif;?>

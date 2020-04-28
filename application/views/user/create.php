@@ -27,12 +27,8 @@
 									<input class="form-control" type="password" name="cfpassword" placeholder="Password" data-match="#password" required />
 								</div>
 								<div class="form-group">
-									<label for="first_name">First Name: <span class="required">*</span></label>
-									<input class="form-control" type="text" name="first_name" placeholder="First Name" required />
-								</div>
-								<div class="form-group">
-									<label for="last_name">Last Name:</label>
-									<input class="form-control" type="text" name="last_name" placeholder="Last Name" />
+									<label for="fname">First Name: <span class="required">*</span></label>
+									<input class="form-control" type="text" name="fname" placeholder="First Name" required />
 								</div>
 								<div class="form-group">
 									<label for="company">Company: <span class="required">*</span></label>

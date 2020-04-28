@@ -19,8 +19,7 @@ class User_model extends CI_Model
 			'company_id' 	=> $user['company_id'],
 			'login' 		=> strtolower($user['login']),
 			'password' 		=> $user['password'],
-			'first_name' 	=> $user['first_name'],
-			'last_name'		=> $user['last_name'],
+			'first_name' 	=> $user['fname'],
 			'created_by' 	=> $user['user']
 		);
 		$this->db->insert('cdm_user', $data);
@@ -62,7 +61,6 @@ class User_model extends CI_Model
 			'company_id' 	=> $user['company_id'],
 			'login' 		=> strtolower($user['login']),
 			'first_name' 	=> $user['first_name'],
-			'last_name'		=> $user['last_name'],
 			'updated_by' 	=> $user['user'],
 			'updated_at'	=> date('Y-m-d H:i:s')
 		);

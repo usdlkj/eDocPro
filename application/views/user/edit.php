@@ -19,12 +19,8 @@
 									<input class="form-control" type="text" name="login" value="<?php echo $user['login'];?>"  pattern="\w*" required data-minlength="4" />
 								</div>
 								<div class="form-group">
-									<label for="first_name">First Name: <span class="required">*</span></label>
-									<input class="form-control" type="text" name="first_name" value="<?php echo $user['first_name'];?>" required />
-								</div>
-								<div class="form-group">
-									<label for="last_name">Last Name:</label>
-									<input class="form-control" type="text" name="last_name" value="<?php echo $user['last_name'];?>" />
+									<label for="fname">First Name: <span class="required">*</span></label>
+									<input class="form-control" type="text" name="fname" value="<?php echo $user['first_name'];?>" required />
 								</div>
 								<div class="form-group">
 									<label for="company">Company: <span class="required">*</span></label>
